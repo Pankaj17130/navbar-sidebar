@@ -9,7 +9,7 @@ const FeedbackPreview = () => {
       comment: "Best purchase I've made this year!",
       author: "Alex P.",
       date: "2024-03-15",
-      image: "public/IMG-20250427-WA0060.jpg" // Add image paths
+      image: "item5.jpg" // Add image paths
     },
     {
       id: 2,
@@ -17,7 +17,7 @@ const FeedbackPreview = () => {
       comment: "Great quality and fast shipping",
       author: "Maria G.",
       date: "2024-03-14",
-      image: "public/IMG-20250427-WA0063.jpg"
+      image: "item3.jpg"
     },
     {
       id: 3,
@@ -25,13 +25,13 @@ const FeedbackPreview = () => {
       comment: "Excellent customer service and product quality",
       author: "John D.",
       date: "2024-03-13",
-      image: "public/IMG-20250427-WA0062.jpg"
+      image: "item.jpg"
     }
   ];
 
   return (
-    <div className="max-w-7xl mx-auto py-12 px-2 sm:px-6 lg:px-8">
-      <h2 className="text-3xl font-bold text-center mb-8">What Our Customers Say</h2>
+    <div className="max-w-7xl mx-auto py-2 px-2 sm:px-6 lg:px-4">
+      <h2 className="text-3xl font-bold text-center mb-4">What Our Customers Say</h2>
       <div className="grid md:grid-cols-3 gap-8">
         {previewFeedback.map((feedback) => (
           <div 

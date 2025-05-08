@@ -7,16 +7,16 @@ import { ArrowRightIcon } from '@heroicons/react/24/solid';
 // Custom carousel image component
 const CarouselImage = ({ text, imageSrc }) => {
   return (
-    <div className="carousel-image-container aspect-video overflow-hidden">
+    <div className="carousel-image-container h-full w-full overflow-hidden"> {/* Fixed height */}
       <img
-        className="w-full h-full object-cover"
+        className="w-full h-full object-contain object-center" // Changed to object-contain
         src={imageSrc}
         alt={text}
         loading="lazy"
       />
     </div>
   );
-};
+};;
 
 // Animation variants
 const bannerVariants = {

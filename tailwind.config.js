@@ -14,5 +14,14 @@ module.exports = {
     extend:{
       display:["focus-group"]
     }
+  },
+  theme: {
+    extend: {
+      height: {
+        'carousel-sm': '40vh',
+        'carousel-md': '60vh',
+        'carousel-lg': '80vh'
+      }
+    }
   }
 }

@@ -4,7 +4,7 @@ import {
   FaCog,
   FaRegEnvelope,
   FaRegFileAlt,
-  FaTree,
+
 } from "react-icons/fa";
 
 const Sidebar = ({ sidebarToggle }) => {
@@ -17,10 +17,8 @@ const Sidebar = ({ sidebarToggle }) => {
       {/* Header */}
       <div className="mb-6 flex items-center">
         <div className="mr-2">
-          {/* Your logo component or image goes here */}
           <img src="logoImage.png" alt="Logo" className="w-20 h-15" />
         </div>
-        
       </div>
 
       <hr className="border-[#d6c8ae] mb-4" />

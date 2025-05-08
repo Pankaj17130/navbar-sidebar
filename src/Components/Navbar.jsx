@@ -24,9 +24,9 @@ const Navbar = ({ sidebarToggle, setSidebarToggle }) => {
         />
         <div className="flex items-center space-x-2">
           <img
-            src="./mainlogo.png"
+            src="./navlogo.png"
             alt="Qincrarf Logo"
-            className="w-14 h-12 object-contain  shadow-md"
+            className="w-16 h-12 object-contain"
           />
           <span className="text-[#5a3e26] font-bold tracking-wide text-lg"></span>
         </div>

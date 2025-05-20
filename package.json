@@ -11,10 +11,16 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
+    "bcryptjs": "^3.0.2",
     "bootstrap": "^5.3.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
     "framer-motion": "^12.10.0",
+    "jsonwebtoken": "^9.0.2",
     "lucide": "^0.507.0",
     "lucide-react": "^0.507.0",
+    "mongoose": "^8.14.1",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
     "react-dom": "^19.0.0",
@@ -34,5 +40,18 @@
     "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17",
     "vite": "^6.3.1"
-  }
+  },
+  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "main": "eslint.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pankaj17130/navbar-sidebar.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pankaj17130/navbar-sidebar/issues"
+  },
+  "homepage": "https://github.com/Pankaj17130/navbar-sidebar#readme"
 }

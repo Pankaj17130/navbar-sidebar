@@ -23,5 +23,14 @@ module.exports = {
         'carousel-lg': '80vh'
       }
     }
-  }
+  },theme:{
+  extend: {
+      transitionProperty: {
+        'scale': 'transform',
+      },
+      scale: {
+        '105': '1.05',
+      }
+    }
+}
 }

@@ -24,9 +24,9 @@ const Navbar = ({ sidebarToggle, setSidebarToggle }) => {
         />
         <div className="flex items-center space-x-2">
           <img
-            src="./navlogo.png"
+            src="/assets/logoImage.png"
             alt="Qincrarf Logo"
-            className="w-16 h-12 object-contain"
+            className="w-20 h-12 object-contain"
           />
           <span className="text-[#5a3e26] font-bold tracking-wide text-lg"></span>
         </div>
@@ -74,9 +74,13 @@ const Navbar = ({ sidebarToggle, setSidebarToggle }) => {
                       {cartItems.map((item) => (
                         <div key={item.id} className="flex items-center gap-3">
                           <img
-                            src={item.image}
+                            src={item.images[0]} // Changed from item.image to item.images[0]
                             alt={item.name}
                             className="w-14 h-14 object-cover rounded-md"
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = "/assets/placeholder-image.jpg";
+                            }}
                           />
                           <div className="flex-1">
                             <h4 className="font-medium text-sm truncate text-amber-900">

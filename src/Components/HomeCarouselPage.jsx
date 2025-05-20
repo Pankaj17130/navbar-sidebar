@@ -76,27 +76,27 @@ function SixSlideCarousel() {
       <Carousel fade indicators controls className="shadow-xl rounded-lg overflow-hidden">
         {[
           { 
-            image: "/image.png",
+            image: "assets/image.png",
             title: "Summer Collection",
             text: "Explore our new summer arrivals"
           },
           { 
-            image: "/cake.webp",
+            image: "assets/cake.webp",
             title: "Festive Offers",
             text: "Special discounts for festival season"
           },
           { 
-            image: "/image.png",
+            image: "assets/image.png",
             title: "International Delivery",
             text: "We ship to over 100 countries"
           },
           { 
-            image: "/corporate.jpg",
+            image: "assets/corporate.jpg",
             title: "Premium Gifts",
             text: "Find the perfect gift for your loved ones"
           },
           { 
-            image: "/maincake.webp",
+            image: "assets/maincake.webp",
             title: "Corporate Gifts",
             text: "Bulk ordering available for businesses"
           }

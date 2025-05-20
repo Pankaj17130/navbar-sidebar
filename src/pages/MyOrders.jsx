@@ -6,33 +6,39 @@ const MyOrders = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [sortConfig, setSortConfig] = useState({ key: 'date', direction: 'desc' });
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5);
 
-  // Mock data - replace with actual API call
+  // Updated mock data matching previous data structure
   const mockOrders = [
     {
-      id: '12345',
+      id: 'WO-12345',
       date: '2024-03-15',
-      items: 3,
-      total: 149.99,
-      status: 'Delivered',
+      items: [
+        { name: 'Handcarved Wooden Jewelry Box', quantity: 1, price: 2999 },
+        { name: 'Teak Wood Serving Tray', quantity: 2, price: 1499 }
+      ],
+      status: 'delivered',
+      paymentMethod: 'razorpay'
     },
     {
-      id: '12346',
+      id: 'WO-12346',
       date: '2024-03-10',
-      items: 5,
-      total: 299.95,
-      status: 'Processing',
-    },
+      items: [
+        { name: 'Personalized Wooden Clock', quantity: 1, price: 4599 }
+      ],
+      status: 'processing',
+      paymentMethod: 'cod'
+    }
   ];
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        // Simulate API call
         await new Promise(resolve => setTimeout(resolve, 1000));
-        setOrders(mockOrders);
+        setOrders(mockOrders.map(order => ({
+          ...order,
+          total: order.items.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+          itemsCount: order.items.reduce((count, item) => count + item.quantity, 0)
+        })));
         setIsLoading(false);
       } catch (err) {
         setError('Failed to load orders. Please try again later.');
@@ -44,39 +50,35 @@ const MyOrders = () => {
   }, []);
 
   const handleSort = (key) => {
-    let direction = 'asc';
-    if (sortConfig.key === key && sortConfig.direction === 'asc') {
-      direction = 'desc';
-    }
-    setSortConfig({ key, direction });
+    setSortConfig(prev => ({
+      key,
+      direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc'
+    }));
   };
 
   const sortedOrders = [...orders].sort((a, b) => {
-    if (a[sortConfig.key] < b[sortConfig.key]) {
-      return sortConfig.direction === 'asc' ? -1 : 1;
-    }
-    if (a[sortConfig.key] > b[sortConfig.key]) {
-      return sortConfig.direction === 'asc' ? 1 : -1;
-    }
+    if (a[sortConfig.key] < b[sortConfig.key]) return sortConfig.direction === 'asc' ? -1 : 1;
+    if (a[sortConfig.key] > b[sortConfig.key]) return sortConfig.direction === 'asc' ? 1 : -1;
     return 0;
   });
 
   const getStatusColor = (status) => {
     switch (status.toLowerCase()) {
-      case 'delivered':
-        return 'bg-green-100 text-green-800';
-      case 'processing':
-        return 'bg-yellow-100 text-yellow-800';
-      case 'cancelled':
-        return 'bg-red-100 text-red-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
+      case 'delivered': return 'bg-green-100 text-green-800';
+      case 'processing': return 'bg-amber-100 text-amber-800';
+      case 'cancelled': return 'bg-red-100 text-red-800';
+      default: return 'bg-gray-100 text-gray-800';
     }
+  };
+
+  const formatDate = (dateString) => {
+    const options = { day: 'numeric', month: 'short', year: 'numeric' };
+    return new Date(dateString).toLocaleDateString('en-IN', options);
   };
 
   if (error) {
     return (
-      <div className="min-h-screen p-6 bg-gray-50">
+      <div className="min-h-screen p-6 bg-amber-50">
         <div className="max-w-4xl mx-auto">
           <div className="p-4 bg-red-50 border border-red-200 text-red-600 rounded-md">
             {error}
@@ -93,36 +95,43 @@ const MyOrders = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-amber-50 p-6">
       <div className="max-w-7xl mx-auto">
-        <div className="bg-white shadow overflow-hidden rounded-lg">
-          <div className="px-4 py-5 sm:px-6 border-b border-gray-200">
-            <h1 className="text-2xl font-bold text-gray-900">Order History</h1>
-            <p className="mt-1 text-sm text-gray-500">
-              View the status of recent orders and manage returns.
+        <div className="bg-white shadow overflow-hidden rounded-xl border border-amber-100">
+          <div className="px-6 py-5 sm:px-8 border-b border-amber-200 bg-amber-50">
+            <h1 className="text-2xl font-serif font-bold text-amber-900">Order History</h1>
+            <p className="mt-1 text-sm text-amber-700">
+              View your woodcraft order status and details
             </p>
           </div>
 
           {isLoading ? (
             <div className="p-6 animate-pulse space-y-4">
-              {[...Array(itemsPerPage)].map((_, i) => (
-                <div key={i} className="h-12 bg-gray-100 rounded-md"></div>
+              {[...Array(2)].map((_, i) => (
+                <div key={i} className="h-20 bg-amber-100 rounded-lg"></div>
               ))}
             </div>
           ) : orders.length === 0 ? (
-            <div className="p-6 text-center text-gray-500">
-              You haven't placed any orders yet.
+            <div className="p-6 text-center text-amber-600">
+              <div className="inline-block mb-4">
+                <img 
+                  src="/assets/empty-orders.png" 
+                  className="w-48 h-48 object-contain"
+                  alt="No orders"
+                />
+              </div>
+              <p className="text-lg">You haven't placed any orders yet.</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+              <table className="min-w-full divide-y divide-amber-200">
+                <thead className="bg-amber-50">
                   <tr>
                     {['Order ID', 'Date', 'Items', 'Total', 'Status'].map((header) => (
                       <th
                         key={header}
                         scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                        className="px-6 py-4 text-left text-sm font-medium text-amber-900 uppercase cursor-pointer hover:bg-amber-100"
                         onClick={() => handleSort(header.toLowerCase().replace(' ', ''))}
                       >
                         <div className="flex items-center">
@@ -139,35 +148,33 @@ const MyOrders = () => {
                         </div>
                       </th>
                     ))}
-                    <th scope="col" className="px-6 py-3"></th>
+                    <th scope="col" className="px-6 py-4"></th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-white divide-y divide-amber-200">
                   {sortedOrders.map((order) => (
-                    <tr key={order.id}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-600">
+                    <tr key={order.id} className="hover:bg-amber-50">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-amber-800">
                         #{order.id}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {new Date(order.date).toLocaleDateString()}
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-amber-600">
+                        {formatDate(order.date)}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {order.items}
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-amber-600">
+                        {order.itemsCount} items
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        ${order.total.toFixed(2)}
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-amber-800 font-semibold">
+                        ₹{order.total.toFixed(2)}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span
-                          className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(
-                            order.status
-                          )}`}
+                          className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(order.status)}`}
                         >
-                          {order.status}
+                          {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <button className="text-blue-600 hover:text-blue-900 flex items-center">
+                        <button className="text-amber-700 hover:text-amber-900 flex items-center">
                           Details <ChevronRightIcon className="ml-1 h-4 w-4" />
                         </button>
                       </td>
@@ -179,14 +186,11 @@ const MyOrders = () => {
           )}
 
           {/* Pagination */}
-          <div className="px-4 py-3 bg-gray-50 border-t border-gray-200 sm:px-6">
-            <div className="flex-1 flex justify-between sm:hidden">
-              <button className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                Previous
-              </button>
-              <button className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                Next
-              </button>
+          <div className="px-6 py-4 bg-amber-50 border-t border-amber-200">
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-amber-600">
+                Showing 1 to {orders.length} of {orders.length} results
+              </span>
             </div>
           </div>
         </div>

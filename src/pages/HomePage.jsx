@@ -1,16 +1,19 @@
 import MainCategoriesRow from "../components/MainCategoriesRow";
 import Homecarouselpage from "../components/HomeCarouselPage";
-import BestSellingGifts from "../components/BestSellingGifts";
+import ProductSection from "../components/ProductSection";
 import FeedbackPreview from "../components/FeedbackPreview"; 
-import Cart from "../pages/Cart";
+import WoodcraftCategories from "../Components/WoodcraftCategories";
+import Cart from "./CartPage";
 
 const Workshop = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Homecarouselpage />
       <MainCategoriesRow />
-      <BestSellingGifts />
+      <ProductSection />
+      <WoodcraftCategories/>
       <FeedbackPreview />
+       
     </div>
   );
 };
